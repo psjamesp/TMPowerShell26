@@ -51,7 +51,3 @@ to JSON in addition to CSV, and add one Azure resource query (e.g., list
 VMs in a resource group) alongside the on-prem health check.
 **Starter:** `Exercise6-Capstone.ps1`
 
----
-**Instructor note:** solution files for each exercise are provided in the
-`Solutions/` folder distributed separately to instructors to avoid
-spoiling the exercises if students browse the shared repo early.
