@@ -15,7 +15,10 @@
 # --- Terminating vs. non-terminating errors ----------------------------
 # Non-terminating: the error is written to the error stream and the script
 # carries on to the next statement.
-Get-Item -Path 'C:\DoesNotExist.txt' -ErrorAction SilentlyContinue
+Get-Item -Path 'C:\DoesNotExist.txt' 
+"Script continued after the error above."
+
+Get-Item -Path 'C:\DoesNotExist.txt' -ea SilentlyContinue
 "Script continued after the error above."
 
 # -ErrorAction Stop promotes it to a terminating error, so catch can see it.
@@ -24,6 +27,9 @@ try {
 }
 catch {
     Write-Warning "Caught it: $($_.Exception.Message)"
+}
+finally {
+    Write-Verbose "Attempt to read file complete."
 }
 
 #endregion
@@ -69,6 +75,7 @@ $myErrors | ForEach-Object { $_.Exception.Message }
 # $Error is a running list of every error in the session, newest first.
 $Error[0].Exception.Message
 
+$myerrors | Out-File .\myerrors.log
 #endregion
 
 #region Throwing custom, meaningful errors
@@ -81,6 +88,7 @@ function Set-ServerConfig {
     }
     "Configured port $Port"
 }
+
 try {
     Set-ServerConfig -Port 99999
 }
@@ -106,7 +114,3 @@ function Get-ComputedValue {
 # Run with -Verbose in class to show the difference
 Get-ComputedValue -Number 21 -Verbose
 
-# Talking points for class:
-#  - Set-PSBreakpoint -Script .\myscript.ps1 -Line 10
-#  - Or in VS Code / ISE: click the gutter to set a breakpoint, then F5.
-#endregion
